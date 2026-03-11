@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Digital Dream JSK</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0A2540;
+            --secondary: #F5B800;
+            --bg-light: #f3f4f6;
+            --text-main: #374151;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Login Overlay */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 37, 64, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #153c63;
+        }
+
+        /* Dashboard Layout */
+        .sidebar {
+            width: 250px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .nav-items {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .nav-item i {
+            width: 30px;
+        }
+
+        .logout-btn {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+        }
+
+        .logout-btn i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .topbar {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-area {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .section-view {
+            display: none;
+        }
+
+        .section-view.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .stat-info h4 {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .stat-info h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: #f9fafb;
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-new {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7280;
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Simple Fake Login Overlay (Will implement real JWT later if needed, simple pass for now) -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <input type="password" id="adminPassword" class="form-control" placeholder="Enter Admin Password"
+                    required>
+                <button type="submit" class="btn">Login</button>
+                <div id="loginError" style="color: #ef4444; margin-top: 10px; display: none;">Invalid password</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            Digital Dream JSK<br>
+            <span style="font-size:0.8rem; color:var(--secondary); font-weight:400;">Workspace Admin</span>
+        </div>
+        <div class="nav-items">
+            <div class="nav-item active" onclick="switchTab('dashboard')">
+                <i class="fas fa-home"></i> Dashboard
+            </div>
+            <div class="nav-item" onclick="switchTab('internships')">
+                <i class="fas fa-user-graduate"></i> Internships
+            </div>
+            <div class="nav-item" onclick="switchTab('messages')">
+                <i class="fas fa-envelope"></i> Messages
+            </div>
+            <div class="nav-item" onclick="switchTab('blogs')">
+                <i class="fas fa-blog"></i> Manage Blogs
+            </div>
+        </div>
+        <div class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="topbar">
+            <h2 id="pageTitle" style="color: var(--primary);">Dashboard</h2>
+            <div>Admin User</div>
+        </div>
+
+        <div class="content-area">
+
+            <!-- Dashboard View -->
+            <div id="dashboard" class="section-view active">
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #dbeafe; color: #2563eb;"><i
+                                class="fas fa-user-graduate"></i></div>
+                        <div class="stat-info">
+                            <h4>Total Applications</h4>
+                            <h2 id="countInternships">0</h2>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fce7f3; color: #db2777;"><i
+                                class="fas fa-envelope"></i></div>
+                        <div class="stat-info">
+                            <h4>New Messages</h4>
+                            <h2 id="countMessages">0</h2>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-blog"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Published Blogs</h4>
+                            <h2 id="countBlogs">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Recent Activity</h3>
+                    <p style="color: #6b7280; margin-top: 10px;">Select a tab on the left to view detailed data.</p>
+                </div>
+            </div>
+
+            <!-- Internships View -->
+            <div id="internships" class="section-view">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                        <h3>Internship Applications</h3>
+                        <button class="btn" style="width:auto; padding: 8px 15px;" onclick="fetchInternships()"><i
+                                class="fas fa-sync-alt"></i> Refresh</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table id="internshipsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>College / Dept</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages View -->
+            <div id="messages" class="section-view">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                        <h3>Contact Messages</h3>
+                        <button class="btn" style="width:auto; padding: 8px 15px;" onclick="fetchMessages()"><i
+                                class="fas fa-sync-alt"></i> Refresh</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table id="messagesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subject</th>
+                                    <th>Message Snippet</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blogs View -->
+            <div id="blogs" class="section-view">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                        <h3>Manage Blog Posts</h3>
+                        <button class="btn" style="width:auto; background: var(--secondary); color: var(--primary);"
+                            onclick="alert('Feature coming soon!')"><i class="fas fa-plus"></i> New Post</button>
+                    </div>
+                    <p style="color: #6b7280; margin-top: 10px;">Blog management system will be integrated here.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Simple client-side auth state
+        let isAuthenticated = false;
+
+        // Very basic simple hardcoded password protection for demo.
+        // For production we would use server-side sessions/JWT
+        document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPassword').value;
+            // Password set to "admin123" for demo purposes
+            if (pass === 'admin123') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                isAuthenticated = true;
+                // Fetch initial data
+                fetchAllData();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+
+        function logout() {
+            isAuthenticated = false;
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginOverlay').style.display = 'flex';
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Update nav styles
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Show content
+            document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            // Update Title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'internships': 'Internship Applications',
+                'messages': 'Contact Messages',
+                'blogs': 'Manage Blogs'
+            };
+            document.getElementById('pageTitle').textContent = titles[tabId];
+
+            if (tabId === 'internships') fetchInternships();
+            if (tabId === 'messages') fetchMessages();
+        }
+
+        // Fetch Functions (To connect with our Express API)
+        function fetchAllData() {
+            fetchInternships();
+            fetchMessages();
+            // Count blogs (placeholder)
+            document.getElementById('countBlogs').textContent = "4";
+        }
+
+        async function fetchInternships() {
+            try {
+                const response = await fetch('/api/admin/internships');
+                if (!response.ok) throw new Error('Failed to fetch');
+                const data = await response.json();
+
+                document.getElementById('countInternships').textContent = data.length;
+
+                const tbody = document.querySelector('#internshipsTable tbody');
+                tbody.innerHTML = '';
+
+                data.forEach(item => {
+                    const date = new Date(item.created_at).toLocaleDateString();
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>#${item.id}</td>
+                            <td><strong>${item.name}</strong></td>
+                            <td>${item.email}<br><small style="color:#6b7280">${item.phone || ''}</small></td>
+                            <td><span class="badge badge-new">${item.internship_type || 'N/A'}</span></td>
+                            <td>${item.college || 'N/A'}<br><small style="color:#6b7280">${item.department || ''} ${item.year ? ' - ' + item.year : ''}</small></td>
+                            <td>${date}</td>
+                            <td>
+                                ${item.resume_path ? `
+                                    <a href="${item.resume_path}" target="_blank" class="action-btn" title="View Resume" style="text-decoration:none;"><i class="fas fa-eye"></i></a>
+                                    <a href="${item.resume_path}" download class="action-btn" title="Download Resume" style="text-decoration:none;"><i class="fas fa-download"></i></a>
+                                ` : '<span style="color:#9ca3af; font-size:0.85rem;">No File</span>'}
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error(err);
+                document.querySelector('#internshipsTable tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#ef4444;">No data available or error fetching data.</td></tr>';
+            }
+        }
+
+        async function fetchMessages() {
+            try {
+                const response = await fetch('/api/admin/contacts');
+                if (!response.ok) throw new Error('Failed to fetch');
+                const data = await response.json();
+
+                document.getElementById('countMessages').textContent = data.length;
+
+                const tbody = document.querySelector('#messagesTable tbody');
+                tbody.innerHTML = '';
+
+                data.forEach(item => {
+                    const date = new Date(item.created_at).toLocaleDateString();
+                    const snippet = item.message.length > 50 ? item.message.substring(0, 50) + '...' : item.message;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>#${item.id}</td>
+                            <td><strong>${item.name}</strong></td>
+                            <td>${item.email}</td>
+                            <td>General Inquiry</td>
+                            <td><small>${snippet}</small></td>
+                            <td>${date}</td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error(err);
+                document.querySelector('#messagesTable tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ef4444;">No data available or error fetching data.</td></tr>';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Digital Dream JSK</title>
+    <meta name="description"
+        content="Read the latest insights on web development, SEO, and digital marketing from Digital Dream JSK.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .blog-section {
+            padding: 80px 0;
+            background-color: var(--bg-main);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .blog-card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 220px;
+            background-color: #e1e5eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .blog-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .blog-meta i {
+            margin-right: 8px;
+            color: var(--primary-light);
+        }
+
+        .blog-meta span {
+            margin-right: 20px;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .blog-title a {
+            color: var(--primary);
+        }
+
+        .blog-title a:hover {
+            color: var(--secondary-hover);
+        }
+
+        .blog-desc {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: auto;
+        }
+
+        .read-more i {
+            margin-left: 8px;
+            transition: transform 0.3s;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" style="padding:0; box-shadow: var(--shadow-sm);">
+        <div class="container nav-content">
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="Digital Dream JSK Logo"><span class="logo-text">Digital Dream <span class="highlight">JSK</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/internship">Internship</a></li>
+                <li><a href="/portfolio">Portfolio</a></li>
+                <li><a href="/blog" class="active">Blog</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Insights</h1>
+            <p>Latest trends, tips, and articles on web development and digital growth.</p>
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-grid" id="blogGrid">
+
+                <!-- Blog 1 -->
+                <article class="blog-card">
+                    <div class="blog-img" style="background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);">
+                        <span class="blog-category">Business Growth</span>
+                        <i class="fas fa-chart-line" style="color:white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar-alt"></i> Mar 10, 2026</span>
+                            <span><i class="far fa-user"></i> Kapil JS</span>
+                        </div>
+                        <h3 class="blog-title"><a href="/blog/how-to-build-website">How small businesses can grow with
+                                websites</a></h3>
+                        <p class="blog-desc">In today's digital age, having a website is no longer an option but a
+                            necessity. Learn how a strong online presence can transform your local business.</p>
+                        <a href="/blog/how-to-build-website" class="read-more">Read Article <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Blog 2 -->
+                <article class="blog-card">
+                    <div class="blog-img" style="background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);">
+                        <span class="blog-category">Digital Marketing</span>
+                        <i class="fas fa-bullhorn" style="color:white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar-alt"></i> Mar 05, 2026</span>
+                            <span><i class="far fa-user"></i> Admin</span>
+                        </div>
+                        <h3 class="blog-title"><a href="/blog/seo-tips">Importance of Digital Marketing & SEO</a></h3>
+                        <p class="blog-desc">Discover the core principles of Search Engine Optimization and how
+                            effective digital marketing campaigns increase your reach exponentially.</p>
+                        <a href="/blog/seo-tips" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Blog 3 -->
+                <article class="blog-card">
+                    <div class="blog-img" style="background: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);">
+                        <span class="blog-category">Technology</span>
+                        <i class="fas fa-code" style="color:white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar-alt"></i> Feb 28, 2026</span>
+                            <span><i class="far fa-user"></i> Tech Team</span>
+                        </div>
+                        <h3 class="blog-title"><a href="/blog/web-development-trends-2026">Web development trends in
+                                2026</a></h3>
+                        <p class="blog-desc">From WebAssembly expansions to AI-driven UI generation, explore the
+                            cutting-edge trends that are reshaping the web development landscape this year.</p>
+                        <a href="/blog/web-development-trends-2026" class="read-more">Read Article <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Blog 4 -->
+                <article class="blog-card">
+                    <div class="blog-img" style="background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);">
+                        <span class="blog-category">Startups</span>
+                        <i class="fas fa-robot" style="color:white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar-alt"></i> Feb 15, 2026</span>
+                            <span><i class="far fa-user"></i> Kapil JS</span>
+                        </div>
+                        <h3 class="blog-title"><a href="/blog/ai-tools-for-startups">AI tools for modern startups</a>
+                        </h3>
+                        <p class="blog-desc">How early-stage startups can leverage accessible Artificial Intelligence
+                            tools to automate their workflow, reduce overhead, and scale faster.</p>
+                        <a href="/blog/ai-tools-for-startups" class="read-more">Read Article <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Digital Dream JSK. All rights reserved. | Founder: Kapil JS | Co-Founder: Kathikeyan V</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
